@@ -54,6 +54,7 @@ class APIController extends Controller
                 $face[] = [
                     'nis' => $nis,
                     'similarity' => $row['Similarity'],
+                    'foto' => url('images', \App\Face::where('face_id', $row['Face']['FaceId'])->first()->filename),
                     'data' => \App\Siswa::find($nis)
                 ];
             }
