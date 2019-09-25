@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('login', 'APIController@login');
 
-Route::group(['middleware' => 'auth:api'], function ($router) {
+Route::group(['middleware' => 'token'], function ($router) {
     Route::post('identify', 'APIController@getIdentity');
     Route::get('list-data', 'APIController@listData');
 });

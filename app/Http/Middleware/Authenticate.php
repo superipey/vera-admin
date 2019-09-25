@@ -21,17 +21,20 @@ class Authenticate extends Middleware
         }
     }
 
-    public function handle($request, Closure $next, ...$guards)
+    protected function authenticate($request, array $guards)
     {
-        try {
-            $this->authenticate($request, $guards);
-        } catch (\Exception $e) {
-            if ($request->isJson()) {
-                return response()->json([
-                    'messsage' => 'Unauthorized'
-                ])->setStatusCode(401);
+        if (empty($guards)) {
+            $guards = [null];
+        }
+
+        foreach ($guards as $guard) {
+            if ($this->auth->guard($guard)->check()) {
+                return $this->auth->shouldUse($guard);
             }
         }
-        return $next($request);
+
+        throw new AuthenticationException(
+            'Unauthenticated.', $guards, $this->redirectTo($request)
+        );
     }
 }
