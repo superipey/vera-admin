@@ -6,14 +6,14 @@
         <div class="kt-subheader   kt-grid__item" id="kt_subheader">
             <div class="kt-container  kt-container--fluid ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">Siswa</h3>
+                    <h3 class="kt-subheader__title">Guru</h3>
                     <span class="kt-subheader__separator kt-hidden"></span>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"> <i class="flaticon2-shelter"></i> </a>
 
                         <span class="kt-subheader__breadcrumbs-separator"></span>
 
-                        <a href="" class="kt-subheader__breadcrumbs-link"> Form Data Siswa</a>
+                        <a href="" class="kt-subheader__breadcrumbs-link"> Form Data Guru</a>
                     </div>
                 </div>
             </div>
@@ -28,13 +28,13 @@
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
-                                Data Siswa
+                                Data Guru
                             </h3>
                         </div>
                     </div>
 
                     <!--begin::Form-->
-                    <form class="kt-form kt-form--label-right" action="{{ url('siswa', @$result->nis) }}" method="POST">
+                    <form class="kt-form kt-form--label-right" action="{{ url('guru', @$result->id) }}" method="POST">
                         @if(!empty($result))
                             @method('PATCH')
                         @endif
@@ -42,16 +42,9 @@
                         @csrf
                         <div class="kt-portlet__body">
                             <div class="form-group row">
-                                <label for="nis" class="col-2 col-form-label">NIS</label>
+                                <label for="nip" class="col-2 col-form-label">NIP</label>
                                 <div class="col-3">
-                                    <input class="form-control" type="text" id="nis" name="nis" placeholder="Masukan NIS" value="{{ old('nis', @$result->nis) }}" {{ !empty($result) ? 'disabled' : '' }}>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="nisn" class="col-2 col-form-label">NISN</label>
-                                <div class="col-3">
-                                    <input class="form-control" type="text" id="nisn" name="nisn" placeholder="Masukan NISN" value="{{ old('nisn', @$result->nisn) }}">
+                                    <input class="form-control" type="text" id="nip" name="nip" placeholder="Masukan NIP" value="{{ old('nip', @$result->nip) }}">
                                 </div>
                             </div>
 
@@ -153,6 +146,49 @@
                                 <label for="email" class="col-2 col-form-label">Email</label>
                                 <div class="col-5">
                                     <input class="form-control" type="email" id="email" name="email" placeholder="Masukan Email" value="{{ old('email', @$result->biodata->email) }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="username" class="col-2 col-form-label">Username</label>
+                                <div class="col-5">
+                                    <input class="form-control" type="text" id="username" name="username" placeholder="Masukan Username" value="{{ old('username', @$result->username) }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-2 col-form-label">Password</label>
+                                <div class="col-5">
+                                    <input class="form-control" type="password" id="password" name="password" placeholder="Masukan Password">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="repassword" class="col-2 col-form-label">Password (Ulangi)</label>
+                                <div class="col-5">
+                                    <input class="form-control" type="password" id="repassword" name="repassword" placeholder="Masukan Password (Ulangi)">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="level" class="col-2 col-form-label">Level</label>
+                                <div class="col-5">
+                                    <select class="form-control" id="level" name="level">
+                                        <option value="" {{ empty(old('level', @$result->level)) ? 'selected' : '' }}>- Pilih Level Guru -</option>
+                                        <option value="0" {{ old('level', @$result->level) == 0 ? 'selected' : '' }}>Guru</option>
+                                        <option value="1" {{ old('level', @$result->level) == 1 ? 'selected' : '' }}>Administrator</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="kategori_guru" class="col-2 col-form-label">Kategori Guru</label>
+                                <div class="col-5">
+                                    <select class="form-control" id="kategori_guru" name="kategori_guru">
+                                        <option value="" {{ empty(old('kategori_guru', @$result->kategori_guru)) ? 'selected' : '' }}>- Pilih Kategori Guru -</option>
+                                        <option value="1" {{ old('kategori_guru', @$result->kategori_guru) == 1 ? 'selected' : '' }}>Guru PNS</option>
+                                        <option value="2" {{ old('kategori_guru', @$result->kategori_guru) == 2 ? 'selected' : '' }}>Guru Non-PNS</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

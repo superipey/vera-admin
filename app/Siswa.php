@@ -10,6 +10,8 @@ class Siswa extends Model
 
     protected $primaryKey = 'nis';
 
+    protected $with = ['biodata', 'detail_kelas'];
+
     protected $fillable = [
         'nis', 'id_biodata', 'nisn', 'id_tahun_pelajaran'
     ];

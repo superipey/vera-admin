@@ -11,8 +11,65 @@ class SiswaController extends Controller
 {
     public function index(Request $request)
     {
-        $data['result'] = \App\Siswa::all();
+        $data['result'] = \App\Siswa::orderBy('created_at')->get();
         return view('siswa.list', $data);
+    }
+
+    public function create(Request $request)
+    {
+        return view('siswa.form');
+    }
+
+    public function edit(Request $request, $nis)
+    {
+        $data['result'] = \App\Siswa::find($nis);
+        return view('siswa.form', $data);
+    }
+
+    public function store(Request $request, $nis = 0)
+    {
+        $rules = [
+            'nisn' => 'required',
+            'nama_lengkap' => 'required',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|dateFormat:Y-m-d',
+            'agama' => 'required',
+            'alamat_jalan' => 'required',
+            'alamat_rt' => 'required',
+            'alamat_rw' => 'required',
+            'alamat_desa' => 'required',
+            'alamat_kecamatan' => 'required',
+            'alamat_kota' => 'required',
+            'alamat_pos' => 'required',
+            'telp_mobile' => 'required',
+            'email' => 'required|email'
+        ];
+        if (empty($nis)) $rules['nis'] = 'required|unique:tbl_siswa';
+
+        $this->validate($request, $rules);
+
+        $input = $request->all();
+
+        if (!empty($nis)) {
+            $siswa = \App\Siswa::find($nis);
+            $siswa->update($input);
+            $siswa->biodata->update($input);
+            return redirect('siswa')->with('success', 'Data berhasil diubah');
+        } else {
+            $biodata = \App\Biodata::create($input);
+            $input['id_biodata'] = $biodata->id;
+            $input['id_tahun_pelajaran'] = \App\TahunPelajaran::where('status', 1)->first()->id;
+            \App\Siswa::create($input);
+
+            return redirect('siswa')->with('success', 'Data berhasil ditambah');
+        }
+    }
+
+    public function destroy(Request $request, $nis)
+    {
+        $data['result'] = \App\Siswa::find($nis)->delete();
+        return redirect('siswa')->with('success', 'Data berhasil dihapus');
     }
 
     public function getFoto(Request $request, $id)
@@ -42,11 +99,6 @@ class SiswaController extends Controller
         $data['files'] = $listFiles;
 
         return view('siswa.foto', $data);
-    }
-
-    public function create(Request $request)
-    {
-        return view('siswa.form');
     }
 
     public function storeFoto(Request $request)

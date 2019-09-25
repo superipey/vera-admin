@@ -6,14 +6,14 @@
         <div class="kt-subheader   kt-grid__item" id="kt_subheader">
             <div class="kt-container  kt-container--fluid ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">Siswa</h3>
+                    <h3 class="kt-subheader__title">Tahun Pelajaran</h3>
                     <span class="kt-subheader__separator kt-hidden"></span>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"> <i class="flaticon2-shelter"></i> </a>
 
                         <span class="kt-subheader__breadcrumbs-separator"></span>
 
-                        <a href="" class="kt-subheader__breadcrumbs-link"> Siswa</a>
+                        <a href="" class="kt-subheader__breadcrumbs-link"> Tahun Pelajaran</a>
                     </div>
                 </div>
             </div>
@@ -29,12 +29,12 @@
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title float-left">
-                                Data Siswa
+                                Data Tahun Pelajaran
                             </h3>
                         </div>
 
                         <div class="kt-portlet__head-label float-right">
-                            <a href="{{ route('siswa.create') }}" class="btn btn-outline-success btn-square"><i class="fa fa-plus"></i> Tambah</a>
+                            <a href="{{ route('tahun-pelajaran.create') }}" class="btn btn-outline-success btn-square"><i class="fa fa-plus"></i> Tambah</a>
                         </div>
                     </div>
 
@@ -44,11 +44,7 @@
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>NIS</th>
-                                <th>NISN</th>
-                                <th>Nama Lengkap</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Kelas</th>
+                                <th>Tahun Pelajaran</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -56,17 +52,15 @@
                             @foreach ($result ?? [] as $row)
                                 <tr>
                                     <td>{{ isset($i) ? ++$i : $i = 1 }}</td>
-                                    <td>{{ @$row->nis }}</td>
-                                    <td>{{ @$row->nisn }}</td>
-                                    <td>{{ @$row->biodata->nama_lengkap }}</td>
-                                    <td>{{ @$row->biodata->jenis_kelamin }}</td>
-                                    <td>{{ @$row->detail_kelas->kelas->nama_kelas ?? '-' }}</td>
+                                    <td>{{ @$row->tahun_pelajaran }}</td>
                                     <td nowrap>
-                                        <a href="{{ route('siswa.foto', $row->nis) }}" class="btn btn-sm btn-info"><span class="fa fa-image"></span></a>
+                                        @if(@$row->status != 1)
+                                        <a href="{{ route('tahun-pelajaran.aktif', $row->id) }}" class="btn btn-sm btn-info"><span class="fa fa-check"></span></a>
+                                        @endif
 
-                                        <a href="{{ route('siswa.edit', $row->nis) }}" class="btn btn-sm btn-warning"><span class="fa fa-pencil-alt"></span></a>
+                                        <a href="{{ route('tahun-pelajaran.edit', $row->id) }}" class="btn btn-sm btn-warning"><span class="fa fa-pencil-alt"></span></a>
 
-                                        <form action="{{ route('siswa.destroy', $row->nis) }}" method="POST">
+                                        <form action="{{ route('tahun-pelajaran.destroy', $row->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></button>

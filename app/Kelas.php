@@ -16,4 +16,9 @@ class Kelas extends Model
     {
         return $this->hasOne('\App\Guru', 'id', 'id_guru');
     }
+
+    public function detail_kelas()
+    {
+        return $this->hasMany('\App\DetailKelas', 'id_kelas', 'id');
+    }
 }

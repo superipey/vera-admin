@@ -6,14 +6,14 @@
         <div class="kt-subheader   kt-grid__item" id="kt_subheader">
             <div class="kt-container  kt-container--fluid ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">Siswa</h3>
+                    <h3 class="kt-subheader__title">Kelas</h3>
                     <span class="kt-subheader__separator kt-hidden"></span>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"> <i class="flaticon2-shelter"></i> </a>
 
                         <span class="kt-subheader__breadcrumbs-separator"></span>
 
-                        <a href="" class="kt-subheader__breadcrumbs-link"> Siswa</a>
+                        <a href="" class="kt-subheader__breadcrumbs-link"> Kelas</a>
                     </div>
                 </div>
             </div>
@@ -29,12 +29,12 @@
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title float-left">
-                                Data Siswa
+                                Data Kelas
                             </h3>
                         </div>
 
                         <div class="kt-portlet__head-label float-right">
-                            <a href="{{ route('siswa.create') }}" class="btn btn-outline-success btn-square"><i class="fa fa-plus"></i> Tambah</a>
+                            <a href="{{ route('kelas.create') }}" class="btn btn-outline-success btn-square"><i class="fa fa-plus"></i> Tambah</a>
                         </div>
                     </div>
 
@@ -44,11 +44,9 @@
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>NIS</th>
-                                <th>NISN</th>
-                                <th>Nama Lengkap</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Kelas</th>
+                                <th>Nama Kelas</th>
+                                <th>Nama Wali Kelas</th>
+                                <th>Jumlah Siswa</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -56,21 +54,19 @@
                             @foreach ($result ?? [] as $row)
                                 <tr>
                                     <td>{{ isset($i) ? ++$i : $i = 1 }}</td>
-                                    <td>{{ @$row->nis }}</td>
-                                    <td>{{ @$row->nisn }}</td>
-                                    <td>{{ @$row->biodata->nama_lengkap }}</td>
-                                    <td>{{ @$row->biodata->jenis_kelamin }}</td>
-                                    <td>{{ @$row->detail_kelas->kelas->nama_kelas ?? '-' }}</td>
+                                    <td>{{ @$row->nama_kelas }}</td>
+                                    <td>{{ @$row->guru->biodata->nama_lengkap }}</td>
+                                    <td>{{ count(@$row->detail_kelas) ?? 0 }}</td>
                                     <td nowrap>
-                                        <a href="{{ route('siswa.foto', $row->nis) }}" class="btn btn-sm btn-info"><span class="fa fa-image"></span></a>
+                                        <a href="{{ route('kelas.edit', $row->id) }}" class="btn btn-sm btn-warning"><span class="fa fa-pencil-alt"></span></a>
 
-                                        <a href="{{ route('siswa.edit', $row->nis) }}" class="btn btn-sm btn-warning"><span class="fa fa-pencil-alt"></span></a>
-
-                                        <form action="{{ route('siswa.destroy', $row->nis) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></button>
-                                        </form>
+                                        @if (count(@$row->detail_kelas) == 0)
+                                            <form action="{{ route('kelas.destroy', $row->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

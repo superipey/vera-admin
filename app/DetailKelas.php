@@ -8,6 +8,8 @@ class DetailKelas extends Model
 {
     protected $table = 'tbl_detail_kelas';
 
+    protected $with = ['kelas'];
+
     protected $fillable = [
         'id_kelas', 'nis'
     ];

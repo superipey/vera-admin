@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="kt-portlet__body">
-                        <form action="{{ route('siswa.search') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('siswa.storeFoto') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="nis" value="{{ $result->nis }}" />
                             <div class="form-group">
