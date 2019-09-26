@@ -66,9 +66,9 @@
                                 <label for="id_kelas" class="col-2 col-form-label">Kelas</label>
                                 <div class="col-10">
                                     <select class="form-control" id="id_kelas" name="id_kelas">
-                                        <option value="" {{ old('id_kelas', @$result->id_kelas) == "" ? 'selected': '' }}>- Pilih Kelas -</option>
+                                        <option value="" {{ empty(old('id_kelas', @$result->detail_kelas->id_kelas)) ? 'selected': '' }}>- Pilih Kelas -</option>
                                         @foreach (\App\Kelas::all() ?? [] as $row)
-                                            <option value="{{ $row->id}}" {{ old('id_kelas', @$result->id_kelas) == $row->id ? 'selected': '' }}>{{ $row->nama_kelas }}</option>
+                                            <option value="{{ $row->id}}" {{ old('id_kelas', @$result->detail_kelas->id_kelas) == $row->id ? 'selected': '' }}>{{ $row->nama_kelas }}</option>
                                         @endforeach
                                     </select>
                                 </div>
