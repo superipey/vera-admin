@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', 'APIController@login');
+Route::post('identify-telegram', 'APIController@getIdentityTelegram');
 
 Route::group(['middleware' => 'token'], function ($router) {
     Route::post('identify', 'APIController@getIdentity');
