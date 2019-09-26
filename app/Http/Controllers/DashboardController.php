@@ -8,6 +8,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        return view('dashboard');
+        $data['pelanggaran'] = \App\Pelanggaran::orderBy('created_at')->get();
+        return view('dashboard', $data);
     }
 }

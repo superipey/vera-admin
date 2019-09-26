@@ -43,13 +43,18 @@ class SiswaController extends Controller
             'alamat_kota' => 'required',
             'alamat_pos' => 'required',
             'telp_mobile' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'id_kelas' => 'required'
         ];
         if (empty($nis)) $rules['nis'] = 'required|unique:tbl_siswa';
 
         $this->validate($request, $rules);
 
         $input = $request->all();
+
+        $input['nis'] = $nis;
+        \App\DetailKelas::where('nis', $nis)->delete();
+        \App\DetailKelas::create($input);
 
         if (!empty($nis)) {
             $siswa = \App\Siswa::find($nis);

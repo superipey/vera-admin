@@ -63,11 +63,22 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="id_kelas" class="col-2 col-form-label">Kelas</label>
+                                <div class="col-10">
+                                    <select class="form-control" id="id_kelas" name="id_kelas">
+                                        <option value="" {{ old('id_kelas', @$result->id_kelas) == "" ? 'selected': '' }}>- Pilih Kelas -</option>
+                                        @foreach (\App\Kelas::all() ?? [] as $row)
+                                            <option value="{{ $row->id}}" {{ old('id_kelas', @$result->id_kelas) == $row->id ? 'selected': '' }}>{{ $row->nama_kelas }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="nama_lengkap" class="col-2 col-form-label">Jenis Kelamin</label>
                                 <div class="col-10">
                                     <div class="kt-radio-inline">
                                         <label class="kt-radio"> <input type="radio" value="L" name="jenis_kelamin" {{ old('jenis_kelamin', @$result->biodata->jenis_kelamin) == "L" ? 'checked' : '' }}> Laki-Laki <span></span> </label>
-
 
                                         <label class="kt-radio"> <input type="radio" value="P" name="jenis_kelamin" {{ old('jenis_kelamin', @$result->biodata->jenis_kelamin) == "P" ? 'checked' : '' }}> Perempuan <span></span></label>
                                     </div>

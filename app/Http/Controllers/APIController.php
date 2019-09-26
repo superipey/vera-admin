@@ -23,6 +23,15 @@ class APIController extends Controller
         }
     }
 
+    public function laporan(Request $request)
+    {
+        $input = $request->all();
+        if (empty($input['nis'])) return response()->json(['message' => 'Siswa tidak ditemukan']);
+        $input['id_guru'] = $request->user('api')->id;
+        $status = \App\Pelanggaran::create($input);
+        return response()->json(['message' => 'Laporan berhasil disimpan']);
+    }
+
     public function getIdentity(Request $request)
     {
         $file = $request->file('file');

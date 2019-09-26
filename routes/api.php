@@ -23,4 +23,6 @@ Route::post('identify-telegram', 'APIController@getIdentityTelegram');
 Route::group(['middleware' => 'token'], function ($router) {
     Route::post('identify', 'APIController@getIdentity');
     Route::get('list-data', 'APIController@listData');
+
+    Route::post('laporan', 'APIController@laporan');
 });
