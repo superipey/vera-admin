@@ -52,8 +52,8 @@ class SiswaController extends Controller
 
         $input = $request->all();
 
-        $input['nis'] = $nis;
-        \App\DetailKelas::where('nis', $nis)->delete();
+        if (!empty($nis)) $input['nis'] = $nis;
+        \App\DetailKelas::where('nis', $input['nis'])->delete();
         \App\DetailKelas::create($input);
 
         if (!empty($nis)) {
