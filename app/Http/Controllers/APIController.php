@@ -28,6 +28,7 @@ class APIController extends Controller
         $input = $request->all();
         if (empty($input['nis'])) return response()->json(['message' => 'Siswa tidak ditemukan']);
         $input['id_guru'] = $request->user('api')->id;
+        $input['jenis_pelanggaran'] = $input['jenis_pelanggaran'] + 1;
         $status = \App\Pelanggaran::create($input);
         return response()->json(['message' => 'Laporan berhasil disimpan']);
     }
