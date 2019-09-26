@@ -72,7 +72,7 @@ class APIController extends Controller
         $link = urldecode($link);
 
         $client = new \GuzzleHttp\Client(['base_uri' => 'https://api.telegram.org']);
-        $response = $client->request('GET', '/bot' . $link);
+        $response = $client->request('GET', '/bot841068209:AAHD_e_zn1jv06ZakE5S3ZgaI5H3VyEVG0M/getFile?file_id=' . $link);
         $response = json_decode($response->getBody()->getContents());
         $file_path = $response->result->file_path;
 
